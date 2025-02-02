@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms_Data_Structures_Interview_Questions", "Algorithms_Data_Structures_Interview_Questions.csproj", "{B4CBFC42-6BAD-4300-9161-840F38CEA961}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4CBFC42-6BAD-4300-9161-840F38CEA961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4CBFC42-6BAD-4300-9161-840F38CEA961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4CBFC42-6BAD-4300-9161-840F38CEA961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4CBFC42-6BAD-4300-9161-840F38CEA961}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1BEEE40-CD90-4218-AEE9-6627BCC27E08}
+	EndGlobalSection
+EndGlobal
