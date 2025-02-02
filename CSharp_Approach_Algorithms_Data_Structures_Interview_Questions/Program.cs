@@ -28,12 +28,16 @@ string ReverseStringWhileLoop(string s)
 
     while (start < end)
     {
+        //Put it in a temporary variable
         char temp = charArray[start];
+        //swap the start and the last elements
         charArray[start] = charArray[end];
         charArray[end] = temp;
         
 
+        //move to the next element from front
         start++;
+        //move to the next element from the back
         end--;
     }
 
