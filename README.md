@@ -1022,6 +1022,71 @@ function vowels(str) {
 - ![alt text](image-36.png)
 - ![alt text](image-37.png)
 
+- Complete Solution in C#
+```c#
+ void PrintSpiralMatrix(int n)
+{
+    int value = 1;
+    int[,] matrix = new int[n, n];
+    //initialize the first row
+    int top = 0;
+    //initialize the last row
+    int bottom = n - 1;
+    //initialize the first column
+    int left = 0;
+    //initialize the last column
+    int right = n - 1;
+
+    while(value < n * n)
+    {
+        //Move across the first row from 1st column to last column
+        for(int i = left; i <= right; i++)
+        {
+            matrix[top, i] = value++;
+        }
+        //Move to the next row
+        top++;
+
+        //Move downwards from the last column to the last row
+        for(int i = top; i <= bottom; i++)
+        {
+            matrix[i, right] = value++;
+        }
+        //Move to the righter side column
+        right--;
+
+        //Move left from the second last column to the first column in the last row
+        for(int i = right; i >= left; i--)
+        {
+            matrix[bottom, i] = value++;
+        }
+        //Move to the 2nd last row from the bottom
+        bottom--;
+
+        //Move up from the first column towards the top
+        for(int i = bottom; i >= top; i--)
+        {
+            matrix[i, left] = value++;
+        }
+        //Move to the 2nd column
+        left++;
+
+    }
+
+    //Print the matrix
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j< n; j++)
+        {
+            Console.Write(matrix[i, j] + "\t");
+        }
+        Console.WriteLine();
+    }
+}
+
+
+```
+
 - Solution using javascript
 - ![alt text](image-38.png)
 ```js
@@ -1044,7 +1109,7 @@ function vowels(str) {
     let left = 0;
     //rightmost row
     let right = n-1;
-    
+
     while(value <= n * n) {
         //move from left column to right column
         for(let i = left;i<=right;i++) {
