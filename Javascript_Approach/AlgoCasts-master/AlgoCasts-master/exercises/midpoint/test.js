@@ -13,6 +13,7 @@ describe('Midpoint returns the middle node of an odd numbered list', () => {
     l.insertLast('a');
     l.insertLast('b');
     l.insertLast('c');
+    console.log(midpoint(l));
     expect(midpoint(l).data).toEqual('b');
   });
 

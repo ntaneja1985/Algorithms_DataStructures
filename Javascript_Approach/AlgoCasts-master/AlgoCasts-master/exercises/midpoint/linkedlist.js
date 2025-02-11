@@ -143,15 +143,19 @@ class LinkedList {
   }
 
   insertLast(data) {
+    debugger;
     const last = this.getLast();
 
     if (last) {
       last.next = new Node(data);
+      debugger;
       return last.next;
     } else {
       this.head = new Node(data);
+      debugger;
       return this.head;
     }
+
   }
 
   forEach(fn) {

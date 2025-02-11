@@ -8,6 +8,27 @@
 //     q.add(1);
 //     q.remove(); // returns 1;
 
-class Queue {}
+class Queue {
+  constructor() {
+      this.elements = [];
+  }
+
+  add(element) {
+      this.elements.push(element);
+  }
+
+  remove() {
+      if(this.elements.length > 0) {
+          let element = this.elements[0];
+          this.elements.splice(0, 1);
+          debugger;
+          return element;
+      } else {
+          return Error("queue is empty");
+      }
+  }
+
+}
+
 
 module.exports = Queue;

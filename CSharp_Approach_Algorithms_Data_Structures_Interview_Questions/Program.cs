@@ -61,9 +61,16 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 //Console.WriteLine(vowels(input));
 //Console.ReadLine();
 
-Console.WriteLine("Enter the size of the spiral matrix");
+//Console.WriteLine("Enter the size of the spiral matrix");
+//string input = Console.ReadLine();
+//PrintSpiralMatrix(int.Parse(input));
+//Console.ReadLine();
+
+Console.WriteLine("Enter the number of the fibonacci series");
 string input = Console.ReadLine();
-PrintSpiralMatrix(int.Parse(input));
+
+var result = FibonacciSeries(int.Parse(input));
+Console.WriteLine($"Result is {result}");
 Console.ReadLine();
 
 
@@ -463,5 +470,116 @@ void PrintSpiralMatrix(int n)
             Console.Write(matrix[i, j] + "\t");
         }
         Console.WriteLine();
+    }
+}
+
+int FibonacciSeries(int n, Dictionary<int,int> memo = null)
+{
+    if(n <= 1)
+    {
+        return n;
+    }
+
+    if(memo == null)
+    {
+        memo = new Dictionary<int,int>();
+    }
+    if (memo.ContainsKey(n))
+    {
+        return memo[n];
+    }
+
+    var result =  FibonacciSeries(n - 1,memo) + FibonacciSeries(n - 2,memo);
+    memo[n] = result;
+    return result;
+}
+
+
+
+public class Queue<T>
+{
+    List<T> elements = new List<T>();
+
+    public void Enqueue(T element)
+    {
+        elements.Add(element);
+    }
+    public T Dequeue()
+    {
+        if(elements.Count == 0)
+        {
+            throw new InvalidOperationException("Queue is empty");
+        }
+
+        //Get the first element
+        T element = elements[0];
+        elements.RemoveAt(0);
+        return element;
+    }
+}
+
+public class Node
+{
+    public Node _next { get; set; }
+    public string _data { get; set; }
+
+    public Node(string data, Node next = null)
+    {
+        _data = data;
+        _next = next;
+    }
+}
+
+public class LinkedList
+{
+   public Node Head { get; set; }
+    
+   public int length { get; set; }
+
+    public LinkedList()
+    {
+        Head = null;
+        length = 0;
+    }
+
+    public void insertFirst(string data)
+    {
+        var node = new Node(data);
+        if(Head == null)
+        {
+            Head = node;
+        } else
+        {
+            var current = Head;
+            Head = node;
+            Head._next = current;
+        }
+
+        length++;
+    }
+
+    public int Size => length;
+    
+    public Node getFirst => Head;
+
+    public Node getLast()
+    {
+        if(Head._next == null)
+        {
+            return Head;
+        }
+
+        var current = Head._next;
+        while(current._next != null)
+        {
+            current = current._next;
+        }
+
+        return current;
+    }
+
+    public void Clear() 
+    { 
+        Head = null; length = 0; 
     }
 }

@@ -1140,3 +1140,1078 @@ function vowels(str) {
 module.exports = matrix;
 
 ```
+
+## Runtime Complexity
+- Describes the performance of an algorithm
+- How much processing power/time is required to run the algorithm if we double the complexity.
+- ![alt text](image-39.png)
+- ![alt text](image-40.png)
+- Complexity of Reversing the string is O(n) -->linear runtime
+- One to one relationship between the number of inputs.
+- For steps problem we have 2 nested for loop 
+- ![alt text](image-41.png)
+- ![alt text](image-42.png)
+- Complexity is O(n^2)
+- ![alt text](image-43.png)
+- **O (1)** complexity means that algorithm run in constant time, meaning the execution time doesnot depend on the size of the input. 
+- For e.g accessing an array by index or inserting an element at the beginning of a singly linked list or checking if a number is even or odd.
+- **log(n)** algorithm means that doubling the input elements doesnot double the amount of work we need to do. Mostly searching operations are log(n). One common example is:
+- **Binary Search**
+Binary search is a classic algorithm that finds the position of a target value within a sorted array. It repeatedly divides the search interval in half.
+
+- **Linear time O(n)** means that the amount of work to be done depends on the number of input elements.
+  For e.g running a for loop from O to length 
+
+- **Quasilinear time (n*log(n))** -->doubling the number of input elements doesnot double the amount of work. For e.g all sorting operations are usually n * log(n).
+- **Merge Sort**
+Merge Sort is a classic example of a divide-and-conquer sorting algorithm that consistently runs in O(n log n) time.
+- **Heapsort**
+Heapsort is another comparison-based sorting algorithm that runs in O(n log n) time. It leverages a binary heap data structure.
+
+- **Quadratic time(n^2)**--> This means the processing power required doubles based on number of input elements. This usually happens when we have to compare each element against the other one. Usually it involves nested for loops. 
+- **Exponential time: O(2^n)**: This means if we add a single element to the collect, the processing power is doubled. 
+An example of exponential time algorithm is the brute force approach to the travelling salesperson problem: 
+- **Traveling Salesman Problem** (TSP) - Brute Force Approach
+The Traveling Salesman Problem involves finding the shortest possible route that visits each city exactly once and returns to the origin city. The brute force approach to solve this problem requires checking all possible permutations of the cities.
+- **Subset Sum Problem**
+The subset sum problem involves determining if there exists a subset of a given set of integers that adds up to a specific target sum. The brute force approach checks all possible subsets.
+![alt text](image-44.png)
+
+## Tips for identifying runtime complexity
+- ![alt text](image-45.png)
+- ![alt text](image-46.png)
+- ![alt text](image-47.png)
+
+## Space Complexity of an algorithm
+- Space complexity of an algorithm refers to the amount of memory an algorithm uses relative to the input size. This includes the memory required for variables, data structures, control structures, and the call stack. Space complexity helps us understand the efficiency of an algorithm in terms of memory usage.
+- Here also we have O(1), O(n), O(n ^ 2) and O(logn)
+```js
+ function sum(a, b) {
+    return a + b;
+}
+```
+- This function uses a fixed amount of memory to store the input variables a and b and result. Its space complexity is O(1).
+```js
+ function createMatrix(n) {
+    let matrix = [];
+    for (let i = 0; i < n; i++) {
+        let row = [];
+        for (let j = 0; j < n; j++) {
+            row.push(i * j);
+        }
+        matrix.push(row);
+    }
+    return matrix;
+}
+```
+- This function creates an n x n matrix, so the memory required grows quadratically with the input size. Thus, its space complexity is O(n^2).
+```c#
+ int BinarySearch(int[] arr, int target, int low, int high) {
+    if (low > high) {
+        return -1;
+    }
+    int mid = (low + high) / 2;
+    if (arr[mid] == target) {
+        return mid;
+    } else if (arr[mid] < target) {
+        return BinarySearch(arr, target, mid + 1, high);
+    } else {
+        return BinarySearch(arr, target, low, mid - 1);
+    }
+}
+
+
+```
+- Explanation: This recursive binary search algorithm has a space complexity of O(log n) due to the recursive call stack, which grows logarithmically with the input size.
+
+## Fibonacci Series
+- Problem Statement: 
+```js
+ // --- Directions
+// Print out the n-th entry in the fibonacci series.
+// The fibonacci series is an ordering of numbers where
+// each number is the sum of the preceeding two.
+// For example, the sequence
+//  [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+// forms the first ten entries of the fibonacci series.
+// Example:
+//   fib(4) === 3
+
+```
+- Iterative solution with complexity of O(n)
+```js
+  function fib(n) {
+    const result = [0,1];
+    for(let i = 2;i<= n;i++){
+        const a = result[i - 1];
+        const b = result[i - 2];
+        result[i] = a + b;
+    }
+    return result[n];
+}
+
+```
+- Recursive Solution
+```js
+ function fib(n) {
+    if(n <= 1){
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+```
+- ![alt text](image-48.png)
+- ![alt text](image-49.png)
+- ![alt text](image-50.png)
+
+- Problem with above solution is that it has exponential runtime. 
+- Every additional element, we are getting dramatic increase in the number of function calls. 
+- This is because it exhibits overlapping sub problems and recomputes the same values multiple times.
+- So this is O(2^n) solution. This is not a good solution. 
+
+## Memoization
+- ![alt text](image-51.png)
+- ![alt text](image-52.png)
+- We can solve it using memoization like this: 
+```js
+ function fib(n, obj = {}) {
+    if(n <= 1){
+        return n;
+    }
+    if(obj[n]){
+        return obj[n];
+    }
+    let result =  fib(n - 1,obj) + fib(n - 2,obj);
+    obj[n] = result;
+    return result;
+}
+
+
+```
+- Another way of doing this is as follows:
+```js
+ function memoize(fn) {
+    const cache = {};
+    return function(...args) {
+        if(cache[args]) {
+            return cache[args];
+        }
+        const result = fn.apply(this, args);
+        cache[args] = result;
+        return result;
+    }
+}
+
+function fib(n) {
+    if(n <= 1){
+        return n;
+    }
+    return fib(n -1) + fib(n - 2);
+}
+
+fib = memoize(fib);
+
+
+```
+- This dramatically reduces the runtime and improves the speed.
+- Similar solution in c# with memoization using Dictionary collection 
+```c#
+ int FibonacciSeries(int n, Dictionary<int,int> memo = null)
+{
+    if(n <= 1)
+    {
+        return n;
+    }
+
+    if(memo == null)
+    {
+        memo = new Dictionary<int,int>();
+    }
+    if (memo.ContainsKey(n))
+    {
+        return memo[n];
+    }
+
+    var result =  FibonacciSeries(n - 1,memo) + FibonacciSeries(n - 2,memo);
+    memo[n] = result;
+    return result;
+}
+
+```
+
+## The Queue 
+- ![alt text](image-53.png)
+- ![alt text](image-54.png)
+- Follows FIFO order 
+- ![alt text](image-55.png)
+- ![alt text](image-56.png)
+- ![alt text](image-57.png)
+- ![alt text](image-58.png)
+- We can implement a queue like this in javascript 
+```js 
+ class Queue {
+  constructor() {
+      this.elements = [];
+  }
+
+  add(element) {
+      this.elements.push(element);
+  }
+
+  remove() {
+      if(this.elements.length > 0) {
+          let element = this.elements[0];
+          this.elements.splice(0, 1);
+          debugger;
+          return element;
+      } else {
+          return Error("queue is empty");
+      }
+  }
+
+}
+
+
+```
+
+- Same functionality can be done in c# like this 
+```c#
+ public class Queue<T>
+{
+    List<T> elements = new List<T>();
+
+    public void Enqueue(T element)
+    {
+        elements.Add(element);
+    }
+    public T Dequeue()
+    {
+        if(elements.Count == 0)
+        {
+            throw new InvalidOperationException("Queue is empty");
+        }
+
+        //Get the first element
+        T element = elements[0];
+        elements.RemoveAt(0);
+        return element;
+    }
+}
+
+
+```
+- The methods used in the video are accurate, because unshift() and pop() are used together. So for example:
+```js
+let arr = [];
+arr.unshift(1)  => arr = [1]
+arr.unshift(2)  => arr =[2,1]
+arr.unshift(3)  => arr =[3,2,1]
+
+//Now, if we pop this array, then '1' will get removed which is FIFO. Example:
+
+arr.pop()  ==> arr=[3,2]
+arr.pop()  ==> arr=[3]
+
+
+//This is also a correct implementation
+class Queue {
+    constructor() {
+        this.queue = [];
+    }
+    add(param) {
+        this.queue.push(param)
+    }
+    remove() {
+        return this.queue.shift();
+    }
+}
+
+```
+
+- However, using push() and shift() isn't incorrect. These methods access from left to right and unshift() and pop() access elements from right to left.
+
+
+## Underwater Queue weaving
+- Problem Statement 
+```js 
+ // --- Directions
+// 1) Complete the task in weave/queue.js
+// 2) Implement the 'weave' function.  Weave
+// receives two queues as arguments and combines the
+// contents of each into a new, third queue.
+// The third queue should contain the *alterating* content
+// of the two queues.  The function should handle
+// queues of different lengths without inserting
+// 'undefined' into the new one.
+// *Do not* access the array inside of any queue, only
+// use the 'add', 'remove', and 'peek' functions.
+// --- Example
+//    const queueOne = new Queue();
+//    queueOne.add(1);
+//    queueOne.add(2);
+//    const queueTwo = new Queue();
+//    queueTwo.add('Hi');
+//    queueTwo.add('There');
+//    const q = weave(queueOne, queueTwo);
+//    q.remove() // 1
+//    q.remove() // 'Hi'
+//    q.remove() // 2
+//    q.remove() // 'There'
+
+
+```
+- Solution in javascript 
+```js 
+class Queue {
+  constructor() {
+    this.data = [];
+  }
+
+  add(record) {
+    this.data.unshift(record);
+  }
+
+  remove() {
+    return this.data.pop();
+  }
+
+  peek(){
+    if(this.data.length > 0){
+      return this.data[this.data.length - 1];
+    }
+    else {
+      return null;
+    }
+
+  }
+}
+
+
+const Queue = require('./queue');
+
+function weave(sourceOne, sourceTwo) {
+    let queue = new Queue();
+    while(sourceOne.peek() || sourceOne.peek())
+    {
+        if(sourceOne.peek()) {
+            queue.add(sourceOne.remove());
+        }
+
+        if(sourceTwo.peek()){
+            queue.add(sourceTwo.remove());
+        }
+    }
+    return queue;
+}
+```
+
+## Stacks
+- ![alt text](image-59.png)
+- Follows LIFO
+- ![alt text](image-60.png)
+- ![alt text](image-61.png)
+- Solution in javascript 
+```js 
+ class Stack {
+    constructor() {
+        this.data = [];
+    }
+
+    push(element) {
+        this.data.unshift(element);
+    }
+
+    pop(){
+        if(this.data.length > 0){
+            return this.data.shift();
+        } else {
+            return Error("stack is empty");
+        }
+
+    }
+    peek(){
+        if(this.data[0]){
+            return this.data[0];
+        }
+        else {
+            return null;
+        }
+    }
+
+}
+
+```
+
+## Queue from Stacks (Implementing a queue using 2 stacks) 
+- Problem Statement:
+```js 
+// --- Directions
+// Implement a Queue datastructure using two stacks.
+// *Do not* create an array inside of the 'Queue' class.
+// Queue should implement the methods 'add', 'remove', and 'peek'.
+// For a reminder on what each method does, look back
+// at the Queue exercise.
+// --- Examples
+//     const q = new Queue();
+//     q.add(1);
+//     q.add(2);
+//     q.peek();  // returns 1
+//     q.remove(); // returns 1
+//     q.remove(); // returns 2
+
+```
+
+- ![alt text](image-62.png)
+- ![alt text](image-63.png)
+- ![alt text](image-64.png)
+- ![alt text](image-65.png)
+- Solution in JavaScript
+```js 
+ class Stack {
+  constructor() {
+    this.data = [];
+  }
+
+  push(record) {
+    this.data.push(record);
+  }
+
+  pop() {
+    return this.data.pop();
+  }
+
+  peek() {
+    return this.data[this.data.length - 1];
+  }
+}
+
+class Queue {
+    constructor() {
+        this.first = new Stack();
+        this.second = new Stack();
+    }
+    add(record) {
+        this.first.push(record);
+    }
+
+    remove() {
+
+        //Pop every element from the first stack and push it on the second stack
+            while(this.first.peek()) {
+                this.second.push(this.first.pop());
+            }
+
+        const record =  this.second.pop();
+
+        //Restore the original state of the first stack
+        while(this.second.peek()){
+            this.first.push(this.second.pop())
+        }
+
+        return record;
+
+    }
+
+    peek(){
+        //Pop every element from the first stack and push it on the second stack
+            while(this.first.peek()) {
+                this.second.push(this.first.pop());
+            }
+
+
+        const record =  this.second.peek();
+
+         //Restore the original state of the first stack
+        while(this.second.peek()){
+            this.first.push(this.second.pop())
+        }
+
+        return record;
+    }
+}
+
+```
+
+## Linked Lists 
+- ![alt text](image-66.png)
+- Linked List is an ordered collection of data. 
+- It contains a list of nodes with each node storing a reference to the next node. 
+- Order of nodes in a linked list is always maintained. 
+- ![alt text](image-67.png)
+- Implementation of a linked List 
+```js 
+ class Node {
+  constructor(data, next = null) {
+    this.data = data;
+    this.next = next;
+  }
+}
+
+class LinkedList {
+  constructor(values = []) {
+    this.head = null;
+
+    for (let value of values) {
+      this.insertLast(value);
+    }
+  }
+
+  clear() {
+    this.head = null;
+  }
+
+  size() {
+    let counter = 0;
+    let node = this.head;
+
+    while (node) {
+      counter++;
+      node = node.next;
+    }
+
+    return counter;
+  }
+
+  getAt(index) {
+    if (!this.head) {
+      return null;
+    }
+
+    let counter = 0;
+    let node = this.head;
+    while (node) {
+      if (counter === index) {
+        return node;
+      }
+      node = node.next;
+      counter++;
+    }
+    return null;
+  }
+
+  insertAt(data, index) {
+    if (!this.head) {
+      this.head = new Node(data);
+      return;
+    }
+
+    if (index === 0) {
+      this.head = new Node(data, this.head);
+      return;
+    }
+
+    let counter = 1;
+    let previous = this.head;
+    let node = this.head.next;
+    while (node) {
+      if (counter === index) {
+        previous.next = new Node(data, node);
+        return;
+      }
+      previous = node;
+      node = node.next;
+      counter++;
+    }
+
+    previous.next = new Node(data, node);
+  }
+
+  removeFirst() {
+    if (!this.head) {
+      return;
+    }
+
+    this.head = this.head.next;
+  }
+
+  removeLast() {
+    if (!this.head) {
+      return;
+    }
+
+    if (!this.head.next) {
+      this.head = null;
+      return;
+    }
+
+    let previous = this.head;
+    let node = this.head.next;
+    while (node.next) {
+      previous = node;
+      node = node.next;
+    }
+    previous.next = null;
+  }
+
+  removeAt(index) {
+    if (!this.head) {
+      return;
+    }
+
+    let counter = 0;
+    let node = this.head;
+    while (node) {
+      if (counter === index - 1) {
+        if (node.next) {
+          return (node.next = node.next.next);
+        } else {
+          return (node.next = null);
+        }
+      }
+      node = node.next;
+      counter++;
+    }
+  }
+
+  getFirst() {
+    return this.head;
+  }
+
+  insertFirst(data) {
+    this.head = new Node(data, this.getFirst());
+  }
+
+  getLast() {
+    if (!this.head) {
+      return null;
+    }
+
+    let node = this.head;
+    while (node.next) {
+      node = node.next;
+    }
+
+    return node;
+  }
+
+  insertLast(data) {
+    const last = this.getLast();
+
+    if (last) {
+      last.next = new Node(data);
+      return last.next;
+    } else {
+      this.head = new Node(data);
+      return this.head;
+    }
+  }
+
+  forEach(fn) {
+    if (!this.head) {
+      return null;
+    }
+
+    let node = this.head;
+    while (node) {
+      fn(node);
+      node = node.next;
+    }
+  }
+
+  *[Symbol.iterator]() {
+    let node = this.head;
+    while (node) {
+      yield node;
+      node = node.next;
+    }
+  }
+}
+
+module.exports = { Node, LinkedList };
+
+
+
+```
+
+## Generators in JavaScript
+- Generators in JavaScript are special functions that can be paused and resumed, allowing for more flexible and controlled execution of code. 
+- They are particularly useful for working with asynchronous operations and implementing iterators. 
+- Generators are defined using the function* syntax, and they use the yield keyword to pause and resume execution.
+- Before async/await, generators were used to write asynchronous code in a synchronous style using libraries like co.js.
+- Think of generators as a book with bookmarkable stops:
+- Start: You open the book (call the generator function) to get an iterator.
+- First Read: You read until the first bookmark (yield), then you close the book.
+- Resume: When you’re ready, you open the book again (next()) and continue from where you left off. 
+- Generators can receive data as well as yield it. 
+- Generators can handle errors using try...catch, and you can throw errors into a generator.
+- In modern JavaScript, you can use async function* to create asynchronous generators, which work well with for await...of loops.
+- generators also play a crucial role in implementing pipelines and can be combined with AsyncGeneratorFunction for working with streams of data.
+```js 
+ function* generatorFunction() {
+  // Code before the first yield
+  yield 'First yield';
+
+  // Code after the first yield
+  yield 'Second yield';
+
+  // Code after the second yield
+  return 'Done';
+}
+
+
+```
+- To use a generator, you need to create an iterator from it and then call its .next() method to move through the yields.
+```js 
+ const gen = generatorFunction();
+
+console.log(gen.next()); // { value: 'First yield', done: false }
+console.log(gen.next()); // { value: 'Second yield', done: false }
+console.log(gen.next()); // { value: 'Done', done: true }
+console.log(gen.next()); // { value: undefined, done: true }
+
+
+```
+- Generators are fantastic for creating sequences without computing them upfront.
+```js 
+ function* infiniteNumbers() {
+  let i = 0;
+  while (true) {
+    yield i++;
+  }
+}
+
+// Usage
+const numbers = infiniteNumbers();
+
+console.log(numbers.next().value); // 0
+console.log(numbers.next().value); // 1
+console.log(numbers.next().value); // 2
+// ...and so on
+
+```
+- You can make objects iterable by implementing a generator that defines the Symbol.iterator method.
+```js 
+ const myIterable = {
+  *[Symbol.iterator]() {
+    yield 1;
+    yield 2;
+    yield 3;
+  }
+};
+
+// Usage
+for (const value of myIterable) {
+  console.log(value); // Outputs 1, then 2, then 3
+}
+
+
+```
+- Handling asynchronous operations 
+```js 
+  function* fetchData() {
+  const user = yield fetch('https://api.example.com/user');
+  console.log('User:', user);
+
+  const posts = yield fetch(`https://api.example.com/posts?userId=${user.id}`);
+  console.log('Posts:', posts);
+}
+
+// Runner function to handle the generator
+function run(generator) {
+  const iter = generator();
+
+  function step(value) {
+    const result = iter.next(value);
+    if (!result.done) {
+      result.value.then(step);
+    }
+  }
+
+  step();
+}
+
+// Usage
+run(fetchData);
+
+
+
+```
+- Async generator 
+```js 
+ async function* asyncGenerator() {
+  for (let i = 0; i < 3; i++) {
+    const data = await fetchData(i); // Assume fetchData returns a promise
+    yield data;
+  }
+}
+
+// Usage
+(async () => {
+  for await (const value of asyncGenerator()) {
+    console.log(value);
+  }
+})();
+
+
+```
+### When to Use Generators
+- Lazy Evaluation: Generate values as needed, which can save memory.
+- Custom Control Flow: Implement complex iteration logic or state machines.
+- Asynchronous Programming: Although async/await is now preferred, generators can still be useful.
+
+### Generators simplify the creation of iterators. 
+Instead of manually implementing the next() method, you can yield values in a generator.
+```js 
+ const customIterable = {
+  [Symbol.iterator]() {
+    let step = 0;
+    return {
+      next() {
+        step++;
+        if (step === 1) {
+          return { value: 'First', done: false };
+        } else if (step === 2) {
+          return { value: 'Second', done: false };
+        }
+        return { value: undefined, done: true };
+      }
+    };
+  }
+};
+
+// Using Generator:
+
+function* customGenerator() {
+  yield 'First';
+  yield 'Second';
+}
+
+const customIterable = {
+  [Symbol.iterator]: customGenerator
+};
+
+
+```
+- ![alt text](image-68.png)
+- Define a generator like this 
+```js 
+
+function *numbers(){
+    const result = 1 + 1;
+    return 20 + (yield result);
+}
+
+
+const generator = numbers();
+
+generator.next() //returns 2, done: false 
+generator.value() //returns 2
+
+//call generator.next() second time
+generator.next() //returns value is null 
+
+
+//call generator.next() with a value 
+//it substitutes or replaces the yield statement with the value that we are passing from the generator
+generator.next(10) //returns 30, done:true 
+
+
+function *list(){
+    yield 1;
+    yield 2;
+    yield 3;
+    yield 4;
+    yield 5;
+}
+
+const generator = list();
+generator.next() //returns 1, done: false
+generator.next() //returns 2, done: false
+generator.next() //returns 3, done: false
+generator.next() //returns 4, done: false
+generator.next() //returns 5, done: false
+generator.next() //returns done: true, no value here
+generator.next() //returns done: true, no value here
+
+
+const numbers = [];
+for(let value of generator){
+    numbers.push(value);
+}
+
+numbers //prints [1,2,3,4,5]
+
+
+function *numbers(){
+    yield 1;
+    yield 2;
+    //We can nest generators
+    yield* moreNumbers;
+    yield 6;
+    yield 7;
+}
+
+function *moreNumbers() {
+    yield 3;
+    yield 4;
+    yield 5;
+}
+
+const generator = numbers();
+let values = [];
+for(let value of generator){
+    values.push(value);
+}
+
+values //returns [1,2,3,4,5,6,7]
+
+
+class Tree {
+    constructor(value = null, children = []){
+        this.value = value;
+        this.children = children;
+    }
+
+    *printValues() {
+        yield this.value;
+        for(let child of this.children){
+            yield* child.printValues();
+        }
+    }
+}
+
+const tree = new Tree(1,[
+    new Tree(2,[new Tree(4)]),
+    new Tree(3)
+]);
+
+const values = [];
+for(let value of tree.printValues()){
+    values.push(value);
+}
+
+
+values; //Prints 1,2,4,3
+
+
+```
+
+## LinkedList with Iterator
+- We can do it using a generator function like this: 
+```js 
+ //using generators to create for..of loop
+
+    *[Symbol.iterator]() {
+        let node = this.head;
+        while(node){
+            yield node;
+            node = node.next;
+        }
+    }
+
+```
+
+## Adding a forEach function to our LinkedList 
+- We can do it in javascript as follows:
+```js 
+ forEach(callback){
+        for(const data of this)
+        {
+            callback(data);
+        }
+    }
+
+
+//Alternative
+forEach(fn) {
+    if (!this.head) {
+      return null;
+    }
+
+    let node = this.head;
+    while (node) {
+      fn(node);
+      node = node.next;
+    }
+  }    
+
+
+```
+
+## Find the midpoint
+- Problem Statement 
+```js 
+ // --- Directions
+// Return the 'middle' node of a linked list.
+// If the list has an even number of elements, return
+// the node at the end of the first half of the list.
+// *Do not* use a counter variable, *do not* retrieve
+// the size of the list, and only iterate
+// through the list one time.
+// --- Example
+//   const l = new LinkedList();
+//   l.insertLast('a')
+//   l.insertLast('b')
+//   l.insertLast('c')
+//   midpoint(l); // returns { data: 'b' }
+
+
+```
+- ![alt text](image-69.png)
+### Slow and Fast pointer technique
+- The slow and fast pointer technique (also known as the two-pointer technique) is a powerful algorithmic approach used to solve problems related to linked lists and arrays. 
+- This technique involves using two pointers that traverse the data structure at different speeds to detect or find specific elements or patterns.
+- Common Applications
+- Detecting Cycles in a Linked List
+- Finding the Middle of a Linked List
+- Removing the N-th Node from the End of a Linked List
+- Rearranging a Linked List
+
+- Use two pointers, where the fast pointer moves two steps at a time and the slow pointer moves one step at a time. 
+- When the fast pointer reaches the end, the slow pointer will be at the middle.
+```js 
+ function midpoint(list) {
+    let slow = list.head;
+    let fast = list.head;
+
+    while(fast.next && fast.next.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    return slow;
+}
+
+
+```
+
+## Circular Lists 
+- Problem Statement 
+```js 
+ // Given a linked list, return true if the list
+// is circular, false if it is not.
+// --- Examples
+//   const l = new List();
+//   const a = new Node('a');
+//   const b = new Node('b');
+//   const c = new Node('c');
+//   l.head = a;
+//   a.next = b;
+//   b.next = c;
+//   c.next = b;
+//   circular(l) // true
+
+
+
+```
+- ![alt text](image-70.png)
+- This is a great place to use the two pointer technique. 
+```js 
+ function circular(list) {
+    let slow = list.head;
+    let fast = list.head;
+
+    while (fast.next && fast.next.next) {
+        slow  = slow.next;
+        fast = fast.next.next;
+
+        if(fast.next === slow){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+```
