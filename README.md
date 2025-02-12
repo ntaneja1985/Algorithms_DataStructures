@@ -2215,3 +2215,131 @@ forEach(fn) {
 
 
 ```
+
+## From Last in the LinkedList 
+- Problem Statement 
+```js 
+ // Given a linked list, return the element n spaces
+// from the last node in the list.  Do not call the 'size'
+// method of the linked list.  Assume that n will always
+// be less than the length of the list.
+// --- Examples
+//    const list = new List();
+//    list.insertLast('a');
+//    list.insertLast('b');
+//    list.insertLast('c');
+//    list.insertLast('d');
+//    fromLast(list, 2).data // 'b'
+
+```
+- ![alt text](image-71.png)
+- We will create a gap of n elements between the slow pointer and fast pointer. 
+```js 
+ function fromLast(list, n) {
+    let slow = list.head;
+    let fast = list.head;
+    while(n > 0){
+        fast = fast.next;
+        n--;
+    }
+    while(fast.next) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+    return slow;
+}
+
+
+```
+
+## Trees 
+- Problem Statement 
+```js 
+ // --- Directions
+// 1) Create a node class.  The constructor
+// should accept an argument that gets assigned
+// to the data property and initialize an
+// empty array for storing children. The node
+// class should have methods 'add' and 'remove'.
+// 2) Create a tree class. The tree constructor
+// should initialize a 'root' property to null.
+// 3) Implement 'traverseBF' and 'traverseDF'
+// on the tree class.  Each method should accept a
+// function that gets called with each element in the tree
+
+
+```
+- ![alt text](image-73.png)
+- ![alt text](image-74.png)
+- ![alt text](image-75.png)
+- ![alt text](image-76.png)
+- In Breadth First Traversal we go from left to right 
+- ![alt text](image-77.png)
+- ![alt text](image-78.png)
+- The difference between traverseBF and traverseDF is that in BF, we add elements to the end of our temporary array whereas in depth first search we add it to the beginning of the array 
+```js 
+ class Node {
+    constructor(data) {
+        this.data = data;
+        this.children = [];
+    }
+
+    add(data) {
+        const node = new Node(data);
+        this.children.push(node);
+    }
+    remove(data){
+        const node = new Node(data);
+        const index = this.children.findIndex(x=>x.data === node.data);
+        this.children.splice(index, 1);
+    }
+}
+
+class Tree {
+    constructor() {
+        this.root = null;
+    }
+
+    traverseBF(fn) {
+        let arr = [];
+        if(this.root){
+            arr.push(this.root);
+        }
+        while (arr.length) {
+            const node = arr.shift();
+            //Add children to the end of the array
+            arr.push(...node.children);
+            fn(node);
+        }
+    }
+
+    traverseDF(fn) {
+        let arr = [];
+        if(this.root){
+            arr.push(this.root);
+        }
+        while (arr.length) {
+            const node = arr.shift();
+            //Add children to the start of the array
+            arr.unshift(...node.children);
+            fn(node);
+        }
+    }
+}
+
+// const letters = [];
+// const t = new Tree();
+// t.root = new Node('a');
+// t.root.add('b');
+// t.root.add('d');
+// t.root.children[0].add('c');
+//
+// t.traverseDF(node => {
+//     letters.push(node.data);
+// });
+
+//
+module.exports = { Tree, Node };
+
+
+```
