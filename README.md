@@ -2343,3 +2343,161 @@ module.exports = { Tree, Node };
 
 
 ```
+
+## Level Width Declaration 
+```js 
+ // --- Directions
+// Given the root node of a tree, return
+// an array where each element is the width
+// of the tree at each level.
+// --- Example
+// Given:
+//     0
+//   / |  \
+// 1   2   3
+// |       |
+// 4       5
+// Answer: [1, 3, 2]
+
+
+```
+- ![alt text](image-79.png)
+- ![alt text](image-80.png)
+- ![alt text](image-81.png)
+- ![alt text](image-82.png)
+- ![alt text](image-83.png)
+- ![alt text](image-84.png)
+- ![alt text](image-85.png)
+```js 
+ function levelWidth(root) {
+    let arr = [];
+    let counters = [0];
+    //stopper value to distinguish between levels of the tree
+    const stopperValue = 's';
+
+    if(root){
+        arr.push(root);
+        arr.push(stopperValue);
+    }
+
+    while(arr.length> 1){
+        const node = arr.shift();
+        if(node === stopperValue){
+            counters.push(0);
+            arr.push(stopperValue);
+        } else {
+            arr.push(...node.children);
+            counters[counters.length - 1]++;
+        }
+    }
+    return counters;
+}
+
+
+```
+
+## Binary Search Trees 
+- Problem Statement 
+```js 
+ // --- Directions
+// 1) Implement the Node class to create
+// a binary search tree.  The constructor
+// should initialize values 'data', 'left',
+// and 'right'.
+// 2) Implement the 'insert' method for the
+// Node class.  Insert should accept an argument
+// 'data', then create an insert a new node
+// at the appropriate location in the tree.
+// 3) Implement the 'contains' method for the Node
+// class.  Contains should accept a 'data' argument
+// and return the Node in the tree with the same value.
+
+
+```
+- ![alt text](image-86.png)
+- ![alt text](image-87.png)
+- ![alt text](image-88.png)
+- Binary tree is one where each node has 2 children. 
+```js 
+ class Node {
+    constructor(data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+    }
+
+    insert(data) {
+        if(data < this.data && this.left)
+        {
+            this.left.insert(data);
+        }
+        else if(data < this.data && !this.left) {
+            this.left = new Node(data);
+        }
+        else if(data > this.data && this.right){
+            this.right.insert(data);
+        }
+        else if(data > this.data && !this.right) {
+            this.right = new Node(data);
+        }
+    }
+}
+
+
+```
+- Contains method 
+- ![alt text](image-89.png)
+```js 
+contains(data) {
+        if(this.data === data) {
+            return this;
+        }
+        if(this.data < data && this.right)
+        {
+            return this.right.contains(data);
+        }
+        else if(this.data > data && this.left){
+            return this.left.contains(data);
+        }
+        return null;
+    }
+
+```
+
+## Validating a Binary Search Tree 
+- Problem Statement 
+```js 
+ // --- Directions
+// Given a node, validate the binary search tree,
+// ensuring that every node's left hand child is
+// less than the parent node's value, and that
+// every node's right hand child is greater than
+// the parent
+
+```
+- ![alt text](image-90.png)
+- ![alt text](image-91.png)
+- We will use recursion to solve this
+```js 
+ function validate(node, min = null, max = null) {
+   if(max !== null && node.data > max)  {
+       return false;
+   }
+   if(min !== null && node.data < min)  {
+       return false;
+   }
+    //Update the maximum value if we are moving to the left
+   if(node.left && !validate(node.left, min, node.data)) {
+       return false;
+   }
+
+    //Update the minimum value if we are moving to the right
+   if (node.right && !validate(node.right, node.data, max)) {
+       return false;
+   }
+
+   return true;
+}
+
+
+```
