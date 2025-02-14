@@ -2501,3 +2501,67 @@ contains(data) {
 
 
 ```
+
+## Javascript Events 
+- JQuery has an internal eventing library inside of it which is used to setup various DOM event handlers like click handler.
+- Problem Statement 
+```js 
+ // --- Directions
+// Create an 'eventing' library out of the
+// Events class.  The Events class should
+// have methods 'on', 'trigger', and 'off'.
+
+
+```
+- Solution in Javascript 
+```js 
+class Events {
+  // Register an event handler
+  constructor() {
+    this.eventRegistry = {};
+  }
+
+  on(eventName, callback) {
+    if(this.eventRegistry[eventName]) {
+      this.eventRegistry[eventName].push(callback);
+    } else {
+      this.eventRegistry[eventName] = [callback];
+    }
+  }
+
+  // Trigger all callbacks associated
+  // with a given eventName
+  trigger(eventName) {
+      if(this.eventRegistry[eventName]) {
+        for(let callback of this.eventRegistry[eventName]) {
+          callback();
+        }
+      }
+  }
+
+  // Remove all event handlers associated
+  // with the given eventName
+  off(eventName) {
+    if(this.eventRegistry[eventName]) {
+      this.eventRegistry[eventName] = [];
+    }
+    //alternative is
+    // delete this.evenRegistry[eventName]
+  }
+}
+
+
+```
+
+## Building Twitter (Design Question)
+- How would you design twitter?
+- ![alt text](image-92.png)
+- ![alt text](image-93.png)
+- ![alt text](image-94.png)
+- ![alt text](image-95.png)
+- ![alt text](image-96.png)
+- ![alt text](image-97.png)
+- ![alt text](image-98.png)
+- ![alt text](image-99.png)
+
+## Sorting Algorithms
