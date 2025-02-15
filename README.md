@@ -2649,6 +2649,7 @@ function selectionSort(arr) {
 - Mergesort has a time complexity of O(n log n) in the worst-case scenario. However, it can be optimized to O(n) using in-place merging and iterative solution.
 - ![alt text](image-103.png)
 - ![alt text](image-104.png)
+- ![alt text](image-105.png)
 - The purpose of mergesort function is to subdivide an array into smallest size possible which is 1. 
 - Solution in javascript 
 ```js 
