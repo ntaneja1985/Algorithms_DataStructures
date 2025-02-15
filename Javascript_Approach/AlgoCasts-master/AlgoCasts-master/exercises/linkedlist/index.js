@@ -3,9 +3,9 @@
 // See 'directions' document
 
 class Node {
-    constructor(data,next = null) {
+    constructor(data,next) {
         this.data = data;
-        this.next = next;
+        this.next = next || null;
     }
 }
 
@@ -32,6 +32,11 @@ class LinkedList {
     }
 
     getLast() {
+
+        if(!this.head){
+            return null;
+        }
+
         let current = this.head;
         while(current.next){
             current = current.next;
@@ -99,8 +104,14 @@ class LinkedList {
     }
 
     removeFirst(){
-        this.head = this.head.next;
-        this.length--;
+        if(this.head.next) {
+            this.head = this.head.next;
+            this.length--;
+        }
+        else {
+            this.head = null;
+            this.length = 0;
+        }
     }
 
     getAt(index) {
