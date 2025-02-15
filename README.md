@@ -2565,3 +2565,131 @@ class Events {
 - ![alt text](image-99.png)
 
 ## Sorting Algorithms
+- ![alt text](image-100.png)
+- Bubblesort is a simple sorting algorithm that works by repeatedly iterating through a list of elements and swapping adjacent elements if they are in the wrong order.
+  1. Start from the beginning: Begin at the first element of the list.
+  2.  Compare with the next element: Compare the current element with the next element in the list.
+  3. Swap if necessary: If the current element is greater than the next element, swap them.
+  4. Move to the next pair: Move on to the next pair of adjacent elements and repeat steps 2-3.
+  5. Repeat until end: Repeat step 1 until you reach the second-to-last element in the list.
+  6. Repeat entire process: Repeat the entire process until no more swaps are needed, indicating that the list is sorted.
+
+- Suppose we have a list of numbers: [64, 34, 25, 12, 22, 11, 90]
+- Start at 64 and compare with 34. Since 64 > 34, swap them.
+- Move to 34 and compare with 25. Since 34 > 25, swap them.
+- Continue this process until you reach the end of the list.
+
+- ![alt text](image-101.png)
+- Solution in javascript 
+```js 
+ function bubbleSort(arr) {
+    for(let i = 0; i < arr.length; i++) {
+        for(let j = 0; j < arr.length - i - 1; j++) {
+            if(arr[j] > arr[j + 1]) {
+                //get the higher value
+                const higherValue = arr[j];
+                //move the lower value to the left
+                arr[j] = arr[j + 1];
+                //move the higher value to the right
+                arr[j + 1] = higherValue;
+            }
+        }
+    }
+    return arr;
+}
+
+
+```
+
+## Selection Sort 
+- Selection sort is a simple sorting algorithm that works by repeatedly finding the minimum element from the unsorted part of the list and swapping it with the first unsorted element.
+  1. Start: Begin at the beginning of the list.
+  2. Find Minimum Element: Find the smallest (or largest, depending on the sorting order) element in the unsorted part of the list.
+  3. Swap with First Unsorted Element: Swap the found minimum element with the first unsorted element.
+  4. The process is repeated until the entire list is sorted.
+
+- Suppose we have the following list: [64, 25, 12, 22, 11]
+- Start at the beginning of the list ([64, 25, 12, 22, 11]).
+- Find the minimum element in the unsorted part of the list (in this case, 11). Swap it with the first unsorted element ([11, 25, 12, 22, 64]).
+- Move one position forward and find the new minimum element in the unsorted part of the list (in this case, 12). Swap it with the second unsorted element ([11, 12, 25, 22, 64]).
+- Repeat steps 2-3 until the entire list is sorted.
+
+- ![alt text](image-102.png)
+- Solution in javascript 
+```js 
+ //Prove me wrong
+function selectionSort(arr) {
+    for(let i = 0; i < arr.length; i++) {
+        //set the index of min to the first element in the iteration
+        let indexOfMin = i;
+        for (let j = i + 1; j < arr.length ; j++) {
+            if(arr[j] < arr[indexOfMin]) {
+                //Update index of Min as at "j" we have element of lesser value
+                indexOfMin = j;
+            }
+        }
+        if(indexOfMin !== i){
+            const lesserValue = arr[indexOfMin];
+            arr[indexOfMin] = arr[i];
+            arr[i] = lesserValue;
+        }
+    }
+    return arr;
+}
+
+```
+
+## Merge Sort
+- Mergesort is a divide-and-conquer algorithm that works by splitting an array into two halves, sorting each half recursively, and then merging the sorted halves back together.
+- How Mergesort Works
+    1. Divide: If the array has only one element or is empty, it is already sorted.
+    2. Conquer: Split the array into two halves until each sub-array has only one element.
+    3. Merge: Compare elements from each sub-array and merge them back together in a sorted order.
+
+- Mergesort has a time complexity of O(n log n) in the worst-case scenario. However, it can be optimized to O(n) using in-place merging and iterative solution.
+- ![alt text](image-103.png)
+- ![alt text](image-104.png)
+- The purpose of mergesort function is to subdivide an array into smallest size possible which is 1. 
+- Solution in javascript 
+```js 
+ function mergeSort(arr) {
+    //if there is only one element in the array, it is already sorted
+    if(arr.length === 1) {
+        return arr;
+    }
+
+    let midpoint = Math.floor(arr.length / 2);
+    //Divide the main array into 2 separate arrays
+    const left = arr.slice(0, midpoint);
+    const right = arr.slice(midpoint);
+
+    //Call the mergeSort function recursively to further split the array
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+    const result = [];
+
+    while(left.length && right.length) {
+        //compare first elements of the left and right arrays
+        if(left[0] < right[0]) {
+            //remove the first element from left array and push it to the results array
+            result.push(left.shift());
+        } else {
+             //remove the first element from right array and push it to the results array
+            result.push(right.shift());
+        }
+    }
+    //if anything is left in the left array, add it to the results array
+    if(left.length) {
+        result.push(...left);
+    }
+    //if anything is left in the right array, add it to the results array
+    if(right.length) {
+        result.push(...right);
+    }
+    return result;
+}
+
+
+```
